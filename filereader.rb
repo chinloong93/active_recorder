@@ -3,6 +3,7 @@ class Filereader
   # Takes in a filename as input and constructs a Record
   def self.construct_record(filename)
   	# Initialize variable name
+    record = nil
   	var_name = ''
     # Opens file and reads in lines
     File.open(filename).each do |line|
@@ -14,6 +15,8 @@ class Filereader
         strs = line.split
         record_name = Filereader.to_entity_name(strs[1])
         var_name = strs[3][1, strs[3].length - 2]
+        # Create user
+        record = Record.new(record_name)
       # Handles end of table line
       elsif line.start_with?('end')
 			  break
@@ -23,8 +26,11 @@ class Filereader
 			  strs = line.split
 			  col = Filereader.to_column_name(strs[0], var_name)
 			  type = Filereader.to_data_name(strs[1])
+        # Add column to user
+        record.add_column(col, type) if col != 'timestamps'
       end
     end
+    record
   end
 
   # Convert table name to Entity name
