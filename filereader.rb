@@ -4,6 +4,7 @@ class Filereader
   def self.construct_record(filename)
     # Get migration file information
     record_info = Filereader.get_initial_line(filename)
+    # Check if file was a valid migration file
     fail ArgumentError, 'Not a migration file' if record_info.empty?
     columns_info = Filereader.get_columns(filename, record_info['var_name'])
     # Create a new record
