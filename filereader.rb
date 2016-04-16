@@ -1,4 +1,4 @@
-# A Filereader class which creates Records based on ActiveRecord tables
+# A Filereader class which creates Records based on migration files
 class Filereader
   # Takes in a filename as input and constructs a Record
   def self.construct_record(filename)
