@@ -18,6 +18,47 @@ class Filewriter
     end
   end
 
+  # Creates a tables view in the directory given
+  def self.write_view(dir, records)
+    open(dir, 'w') do |f|
+      # Print headers
+      f.puts '<!DOCTYPE HTML>'
+      f.puts '<html lang="en">'
+      f.puts '  <head>'
+      f.puts '    <title>ActiveRecord Tables</title>'
+      f.puts '    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">'
+      f.puts '  </head>'
+      f.puts '  <body>'
+      f.puts '    <h1 align="center">Tables</h1>'
+      # Print record tables
+      records.each do |record|
+        f.puts '    <div class="container col-md-offset-2 col-md-8">'
+        f.puts "      <h3 align='center' style='margin-top:30px'>#{Filewriter.pluralize(record.name)} Table</h3>"
+        f.puts '      <table>'
+        f.puts '        <thead>'
+        f.puts '          <tr>'
+        f.puts '            <th>ID</th>'
+        record.columns.each do |col|
+          f.puts "            <th>#{col.capitalize}</th>"
+        end
+        f.puts '          </tr>'
+        f.puts '        </thead>'
+        f.puts '        <tbody>'
+        f.puts "          <% #{Filewriter.to_instance_variable(record.name)}.each do |#{record.name.downcase}| %>"
+        f.puts "            <td><%= #{record.name.downcase}.id %></td>"
+        record.columns.each do |col|
+          f.puts "            <td><%= #{record.name.downcase}.#{col} %></td>"
+        end
+        f.puts '          <% end %>'
+        f.puts '        </tbody>'
+        f.puts '      </table>'
+        f.puts '    </div>'
+      end
+      f.puts '  </body>'
+      f.puts '</html>'
+    end
+  end
+
   # Prepends '@' and appends 's' to a lower case variable name
   def self.to_instance_variable(name)
     "@#{name.downcase}s"
@@ -26,5 +67,10 @@ class Filewriter
   # Appends '.all' to a records name
   def self.to_all(name)
     "#{name}.all"
+  end
+
+  # Appends 's' to a records name
+  def self.pluralize(name)
+    "#{name}s"
   end
 end
