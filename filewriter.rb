@@ -38,7 +38,7 @@ class Filewriter
         f.puts '        <thead>'
         f.puts '          <tr>'
         f.puts '            <th>ID</th>'
-        record.columns.each do |col|
+        record.columns.each do |col, _val|
           f.puts "            <th>#{col.capitalize}</th>"
         end
         f.puts '          </tr>'
@@ -61,7 +61,9 @@ class Filewriter
 
   # Prepends '@' and appends 's' to a lower case variable name
   def self.to_instance_variable(name)
-    "@#{name.downcase}s"
+    instance_name = "@#{name.downcase}s"
+    instance_name = "@#{name.downcase}es" if name.end_with?('s')
+    instance_name
   end
 
   # Appends '.all' to a records name
@@ -71,6 +73,8 @@ class Filewriter
 
   # Appends 's' to a records name
   def self.pluralize(name)
-    "#{name}s"
+    pluralized = "#{name}s"
+    pluralized = "#{name}es" if name.end_with?('s')
+    pluralized
   end
 end
