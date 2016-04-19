@@ -1,5 +1,19 @@
 # A Filereader class which creates Records based on migration files
 class Filereader
+  # Takes in a directory with migrations and returns array of records created
+  def self.construct_records(relative_path)
+    # Initialize array of records
+    records = []
+    # Iterates through every file in a directory
+    dir = File.join(File.dirname(__FILE__), relative_path)
+    Dir.foreach(dir) do |file|
+      next if file.start_with?('.')
+      # Append to records
+      records << Filereader.construct_record(Filereader.to_absolute_path(dir, file))
+    end
+    records
+  end
+
   # Takes in a filename as input and constructs a Record
   def self.construct_record(filename)
     # Get migration file information
@@ -58,7 +72,9 @@ class Filereader
 
   # Convert table name to Entity name
   def self.to_record_name(name)
-    name[1, name.length - 2].capitalize
+    entity_name = name[1, name.length - 2].capitalize
+    entity_name = name[1, name.length - 3].capitalize if name.end_with?('ses')
+    entity_name
   end
 
   # Convert to column name
@@ -69,5 +85,10 @@ class Filereader
   # Convert to data type
   def self.to_column_name(type)
     type[1, type.length - 1]
+  end
+
+  # Convert to absolute path
+  def self.to_absolute_path(dir, file)
+    "#{dir}/#{file}"
   end
 end
