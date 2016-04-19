@@ -1,6 +1,6 @@
 # A Filereader class which creates Records based on migration files
 class Filereader
-  # Takes in a directory with migrations and returns array of records created
+  # Takes in directory with migrations and returns array of records created
   def self.construct_records(relative_path)
     # Initialize array of records
     records = []
