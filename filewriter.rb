@@ -1,6 +1,6 @@
 # A Filereader class which create a controller and view for ActiveRecord tables
 class Filewriter
-  # Creates a controller in the directory given
+  # Creates controller in the directory given
   def self.write_controller(dir, records)
     open(dir, 'w') do |f|
       # Prints class declaration
@@ -46,7 +46,7 @@ class Filewriter
         f.puts '        <tbody>'
         f.puts "          <% #{Filewriter.to_instance_variable(record.name)}.each do |#{record.name.downcase}| %>"
         f.puts "            <td><%= #{record.name.downcase}.id %></td>"
-        record.columns.each do |col|
+        record.columns.each do |col, _val|
           f.puts "            <td><%= #{record.name.downcase}.#{col} %></td>"
         end
         f.puts '          <% end %>'
