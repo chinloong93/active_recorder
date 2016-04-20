@@ -38,6 +38,7 @@ class Filereader
       strs = line.strip!.split
       # Adds column lines hash
       if line.start_with?(var_name)
+        strs[1] = strs[1].slice(0, strs[1].length - 1) if strs[1].end_with?(',')
         type = Filereader.to_data_type(strs[0], var_name)
         columns[Filereader.to_column_name(strs[1])] = type if type != 'timestamps'
       end
@@ -76,8 +77,8 @@ class Filereader
     # Check if name has '_'
     if name.include? '_'
       entity_name = Filereader.to_association_record_name(name)
-    else
-      entity_name = name[1, name.length - 3].capitalize if name.end_with?('ses')
+    elsif name.end_with?('ses')
+      entity_name = name[1, name.length - 3].capitalize
     end
     entity_name
   end
@@ -90,6 +91,7 @@ class Filereader
     entity_name = name[0, name.length - 2] if name.end_with?('ses')
     entity_name
   end
+
   # Convert to column name
   def self.to_data_type(col, var_name)
     col[var_name.length + 1, col.length - var_name.length]
