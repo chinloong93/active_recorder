@@ -73,10 +73,23 @@ class Filereader
   # Convert table name to Entity name
   def self.to_record_name(name)
     entity_name = name[1, name.length - 2].capitalize
-    entity_name = name[1, name.length - 3].capitalize if name.end_with?('ses')
+    # Check if name has '_'
+    if name.include? '_'
+      entity_name = Filereader.to_association_record_name(name)
+    else
+      entity_name = name[1, name.length - 3].capitalize if name.end_with?('ses')
+    end
     entity_name
   end
 
+  # Get association table name
+  def self.to_association_record_name(name)
+    split = name.split('_')
+    name = "#{split[0].slice(1, split[0].length).capitalize}#{split[1].capitalize}"
+    entity_name = name[0, name.length - 1]
+    entity_name = name[0, name.length - 2] if name.end_with?('ses')
+    entity_name
+  end
   # Convert to column name
   def self.to_data_type(col, var_name)
     col[var_name.length + 1, col.length - var_name.length]
