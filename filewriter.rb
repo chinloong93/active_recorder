@@ -65,6 +65,11 @@ class Filewriter
     end
   end
 
+  # Writes the tables routes to the routes.rb file
+  def self.write_routes(file)
+    open(file, 'a') { |f| f.puts "get 'tables' => 'tables#index'" }
+  end
+
   # Prepends '@' and appends 's' to a lower case variable name
   def self.to_instance_variable(name)
     instance_name = "@#{name.downcase}s"
