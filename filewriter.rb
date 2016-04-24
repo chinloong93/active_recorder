@@ -54,7 +54,7 @@ class Filewriter
             f.puts "              <td><%= #{record.name.downcase}.#{col} %></td>"
           end
         end
-        f.puts "            </tr>"
+        f.puts '            </tr>'
         f.puts '          <% end %>'
         f.puts '        </tbody>'
         f.puts '      </table>'
