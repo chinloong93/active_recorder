@@ -1,7 +1,9 @@
 # A Filereader class which create a controller and view for ActiveRecord tables
 class Filewriter
   # Creates controller in the directory given
-  def self.write_controller(dir, records)
+  def self.write_controller(relative_path, records)
+    # Get the absolute path to write the controller
+    dir = File.join(File.dirname(__FILE__), relative_path)
     open(dir, 'w') do |f|
       # Prints class declaration
       f.puts 'class TablesController < ApplicationController'
@@ -19,7 +21,9 @@ class Filewriter
   end
 
   # Creates a tables view in the directory given
-  def self.write_view(dir, records)
+  def self.write_view(relative_path, records)
+    # Get the absolute path to write the view
+    dir = File.join(File.dirname(__FILE__), relative_path)
     open(dir, 'w') do |f|
       # Print headers
       f.puts '<!DOCTYPE HTML>'
@@ -66,7 +70,8 @@ class Filewriter
   end
 
   # Writes the tables routes to the routes.rb file
-  def self.write_routes(file)
+  def self.write_routes(relative_path)
+    file = File.join(File.dirname(__FILE__), relative_path)
     open(file, 'a') { |f| f.puts "get 'tables' => 'tables#index'" }
   end
 
