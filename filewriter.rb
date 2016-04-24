@@ -71,8 +71,25 @@ class Filewriter
 
   # Writes the tables routes to the routes.rb file
   def self.write_routes(relative_path)
-    file = File.join(File.dirname(__FILE__), relative_path)
-    open(file, 'a') { |f| f.puts "get 'tables' => 'tables#index'" }
+    # Get input and output directory of files
+    input = "#{File.join(File.dirname(__FILE__), relative_path)}/routes.rb"
+    output = "#{File.join(File.dirname(__FILE__), relative_path)}/tmp.rb"
+    # Open the file to read from
+    open(input, 'r') do |input_file|
+      open(output, 'w') do |output_file|
+        # Read each line of input
+        input_file.each_line do |line|
+          if line.start_with? 'end'
+            output_file.puts("  get 'tables' => 'tables#index'")
+            output_file.puts('end')
+          else
+            output_file.write(line)
+          end
+        end
+      end
+    end
+    # Overwrite input with output
+    FileUtils.mv(output, input)
   end
 
   # Prepends '@' and appends 's' to a lower case variable name
