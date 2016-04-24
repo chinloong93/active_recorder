@@ -96,8 +96,7 @@ class Filewriter
 
   # Creates a directory with the given path
   def self.create_tables_dir(relative_path)
-    views = "views"
-    dir = "#{File.join(File.dirname(__FILE__), views)}/#{relative_path}"
+    dir = "#{File.join(File.dirname(__FILE__), 'app/views')}/#{relative_path}"
     Dir.mkdir dir
   end
 end
