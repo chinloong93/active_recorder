@@ -29,14 +29,14 @@ class Filewriter
       f.puts '    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">'
       f.puts '  </head>'
       f.puts '  <body>'
-      f.puts '    <h1 align="center">Tables</h1>'
+      f.puts '    <h1 align="center">ActiveRecord Tables</h1>'
       # Print record tables
       records.each do |record|
         f.puts '    <div class="container col-md-offset-2 col-md-8">'
         f.puts "      <h3 align='center' style='margin-top:30px'>#{Filewriter.pluralize(record.name)} Table</h3>"
-        f.puts '      <table>'
+        f.puts '      <table class="table table-bordered">'
         f.puts '        <thead>'
-        f.puts '          <tr>'
+        f.puts '          <tr class="info">'
         f.puts '            <th>ID</th>'
         record.columns.each do |col, _val|
           f.puts "            <th>#{col.capitalize}</th>"
@@ -45,10 +45,16 @@ class Filewriter
         f.puts '        </thead>'
         f.puts '        <tbody>'
         f.puts "          <% #{Filewriter.to_instance_variable(record.name)}.each do |#{record.name.downcase}| %>"
-        f.puts "            <td><%= #{record.name.downcase}.id %></td>"
-        record.columns.each do |col, _val|
-          f.puts "            <td><%= #{record.name.downcase}.#{col} %></td>"
+        f.puts '            <tr>'
+        f.puts "              <td><%= #{record.name.downcase}.id %></td>"
+        record.columns.each do |col, val|
+          if val == 'references'
+            f.puts "              <td><%= #{record.name.downcase}.#{col}.id %></td>"
+          else
+            f.puts "              <td><%= #{record.name.downcase}.#{col} %></td>"
+          end
         end
+        f.puts "            </tr>"
         f.puts '          <% end %>'
         f.puts '        </tbody>'
         f.puts '      </table>'
