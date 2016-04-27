@@ -1,3 +1,6 @@
+require 'active_recorder/filereader'
+require 'active_recorder/filewriter'
+require 'active_recorder/record'
 # Main class for ActiveRecorder gem
 class ActiveRecorder
   def self.record(path)
