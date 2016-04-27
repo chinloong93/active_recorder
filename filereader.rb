@@ -1,11 +1,11 @@
-# A Filereader class which creates Records based on migration files
-class Filereader
+# A Filereader module which creates Records based on migration files
+module Filereader
   # Takes in directory with migrations and returns array of records created
-  def self.construct_records(relative_path)
+  def self.construct_records(path)
     # Initialize array of records
     records = []
     # Iterates through every file in a directory
-    dir = File.join(File.dirname(__FILE__), relative_path)
+    dir = File.join(path, 'db/migrate')
     Dir.foreach(dir) do |file|
       next if file.start_with?('.')
       # Append to records
