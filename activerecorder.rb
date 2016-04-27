@@ -1,15 +1,15 @@
 # Main class for ActiveRecorder gem
 class ActiveRecorder
-  def self.record
+  def self.record(path)
     # Add a tables route to routes.rb
-    Filewriter.write_routes('config')
+    Filewriter.write_routes(path)
     # Get all the records from the
-    records = Filereader.construct_records('db/migrate')
+    records = Filereader.construct_records(path)
     # Construct tables_controller.rb
-    Filewriter.write_controller('app/controllers/tables_controller.rb', records)
+    Filewriter.write_controller(path, records)
     # Create a tables directory
-    Filewriter.create_tables_dir('tables')
+    Filewriter.create_tables_dir(path)
     # Create a index file for tables
-    Filewriter.write_view('app/views/tables/index.html.erb', records)
+    Filewriter.write_view(path, records)
   end
 end
