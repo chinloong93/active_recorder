@@ -1,9 +1,10 @@
-# A Filereader class which create a controller and view for ActiveRecord tables
-class Filewriter
+require 'fileutils'
+# A Filereader module which create a controller and view for ActiveRecord tables
+module Filewriter
   # Creates controller in the directory given
-  def self.write_controller(relative_path, records)
+  def self.write_controller(path, records)
     # Get the absolute path to write the controller
-    dir = File.join(File.dirname(__FILE__), relative_path)
+    dir = File.join(path, 'app/controllers/tables_controller.rb')
     open(dir, 'w') do |f|
       # Prints class declaration
       f.puts 'class TablesController < ApplicationController'
@@ -21,9 +22,9 @@ class Filewriter
   end
 
   # Creates a tables view in the directory given
-  def self.write_view(relative_path, records)
+  def self.write_view(path, records)
     # Get the absolute path to write the view
-    dir = File.join(File.dirname(__FILE__), relative_path)
+    dir = File.join(path, 'app/views/tables/index.html.erb')
     open(dir, 'w') do |f|
       # Print headers
       f.puts '<!DOCTYPE HTML>'
@@ -70,10 +71,10 @@ class Filewriter
   end
 
   # Writes the tables routes to the routes.rb file
-  def self.write_routes(relative_path)
+  def self.write_routes(path)
     # Get input and output directory of files
-    input = "#{File.join(File.dirname(__FILE__), relative_path)}/routes.rb"
-    output = "#{File.join(File.dirname(__FILE__), relative_path)}/tmp.rb"
+    input = "#{File.join(path, 'config')}/routes.rb"
+    output = "#{File.join(path, 'config')}/tmp.rb"
     # Open the file to read from
     open(input, 'r') do |input_file|
       open(output, 'w') do |output_file|
@@ -112,8 +113,8 @@ class Filewriter
   end
 
   # Creates a directory with the given path
-  def self.create_tables_dir(relative_path)
-    dir = "#{File.join(File.dirname(__FILE__), 'app/views')}/#{relative_path}"
+  def self.create_tables_dir(path)
+    dir = File.join(path, 'app/views/tables')
     Dir.mkdir dir
   end
 end
