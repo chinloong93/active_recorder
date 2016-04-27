@@ -3,14 +3,14 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name          = 'active_recorder'
-  spec.version       = '0.1.0'
+  spec.name          = 'ActiveRecorder'
+  spec.version       = '0.1.1'
   spec.authors       = ['Goh Chin Loong']
   spec.email         = ['gohchinloong@gmail.com']
 
   spec.summary       = 'A Ruby gem which visualizes ActiveRecord tables and rows for Rails apps.'
   spec.description   = 'The gem creates a view, controller and routes to allow Rails developers to see their ActiveRecord tables.'
-  spec.homepage      = 'http://www.github.com/chinloong93'
+  spec.homepage      = 'https://rubygems.org/gems/ActiveRecorder'
   spec.license       = 'MIT'
   spec.files         = ['lib/active_recorder.rb',
                         'lib/active_recorder/filewriter.rb',
