@@ -4,7 +4,7 @@ describe Filereader do
   describe '.construct_records' do
     context 'get name of all records and their columns in migration files' do
       it 'returns all information about records' do
-        records = Filereader.construct_records(File.expand_path(''))
+        records = Filereader.construct_records(File.expand_path('test_files'))
         record1 = records[0]
         record2 = records[1]
         record3 = records[2]
@@ -28,7 +28,7 @@ describe Filereader do
     context 'get name of record and its columns' do
       it 'returns all information about a record' do
         hash = { 'name' => 'string', 'email' => 'string', 'password' => 'string' }
-        record = Filereader.construct_record("#{ File.expand_path('db/migrate') }/20160424180906_create_users.rb")
+        record = Filereader.construct_record("#{ File.expand_path('test_files/db/migrate') }/20160424180906_create_users.rb")
         expect(record.columns).to eq(hash)
         expect(record.name).to eq('User')
       end
@@ -38,14 +38,14 @@ describe Filereader do
     context 'get all columns and types in migration' do
       it 'returns columns and its types to migration' do
         hash = { 'name' => 'string', 'email' => 'string', 'password' => 'string' }
-        expect(Filereader.get_columns("#{ File.expand_path('db/migrate') }/20160424180906_create_users.rb", 't')).to eq(hash)
+        expect(Filereader.get_columns("#{ File.expand_path('test_files/db/migrate') }/20160424180906_create_users.rb", 't')).to eq(hash)
       end
     end
   end
   describe '.get_initial_line' do
     context 'get information about migration file' do
       it 'returns table name of migration file' do
-        expect(Filereader.get_initial_line("#{ File.expand_path('db/migrate') }/20160424180906_create_users.rb")['record_name']).to eq('User')
+        expect(Filereader.get_initial_line("#{ File.expand_path('test_files/db/migrate') }/20160424180906_create_users.rb")['record_name']).to eq('User')
       end
     end
   end
