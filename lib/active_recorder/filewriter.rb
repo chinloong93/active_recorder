@@ -75,12 +75,16 @@ module Filewriter
     # Get input and output directory of files
     input = "#{File.join(path, 'config')}/routes.rb"
     output = "#{File.join(path, 'config')}/tmp.rb"
+    # Check whether line already exists
+    exist = false
     # Open the file to read from
     open(input, 'r') do |input_file|
       open(output, 'w') do |output_file|
         # Read each line of input
         input_file.each_line do |line|
-          if line.start_with? 'end'
+          if line.start_with? "  get 'tables' => 'tables#index'"
+            exist = true
+          elsif line.start_with? 'end'
             output_file.puts("  get 'tables' => 'tables#index'")
             output_file.puts('end')
           else
@@ -90,7 +94,7 @@ module Filewriter
       end
     end
     # Overwrite input with output
-    FileUtils.mv(output, input)
+    FileUtils.mv(output, input) unless exist
   end
 
   # Prepends '@' and appends 's' to a lower case variable name
@@ -115,6 +119,7 @@ module Filewriter
   # Creates a directory with the given path
   def self.create_tables_dir(path)
     dir = File.join(path, 'app/views/tables')
+    FileUtils.remove_dir(dir, force = true)
     Dir.mkdir dir
   end
 end
