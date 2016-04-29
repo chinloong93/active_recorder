@@ -119,7 +119,7 @@ module Filewriter
   # Creates a directory with the given path
   def self.create_tables_dir(path)
     dir = File.join(path, 'app/views/tables')
-    FileUtils.remove_dir(dir)
+    FileUtils.remove_dir(dir) if File.directory?(dir)
     Dir.mkdir dir
   end
 end
