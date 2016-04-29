@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>ActiveRecord Tables</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1 align="center">ActiveRecord Tables</h1>
+    <div class="container col-md-offset-2 col-md-8">
+      <h3 align='center' style='margin-top:30px'>Users Table</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr class="info">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.id %></td>
+              <td><%= user.name %></td>
+              <td><%= user.email %></td>
+              <td><%= user.password %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="container col-md-offset-2 col-md-8">
+      <h3 align='center' style='margin-top:30px'>Statuses Table</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr class="info">
+            <th>ID</th>
+            <th>Text</th>
+            <th>User</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @statuses.each do |status| %>
+            <tr>
+              <td><%= status.id %></td>
+              <td><%= status.text %></td>
+              <td><%= status.user.id %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="container col-md-offset-2 col-md-8">
+      <h3 align='center' style='margin-top:30px'>Groups Table</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr class="info">
+            <th>ID</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @groups.each do |group| %>
+            <tr>
+              <td><%= group.id %></td>
+              <td><%= group.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="container col-md-offset-2 col-md-8">
+      <h3 align='center' style='margin-top:30px'>GroupsUsers Table</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr class="info">
+            <th>ID</th>
+            <th>User</th>
+            <th>Group</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @groupsusers.each do |groupsuser| %>
+            <tr>
+              <td><%= groupsuser.id %></td>
+              <td><%= groupsuser.user.id %></td>
+              <td><%= groupsuser.group.id %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
